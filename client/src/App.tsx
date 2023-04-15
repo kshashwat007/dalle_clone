@@ -10,7 +10,15 @@ const App = () => {
         <Link to="/">
           <img src={logo} alt="logo" className="w-28 object-contain"/>
         </Link>
+
+        <Link to="/create-post" className='font-inter bg-[#6469ff] px-4 py-2 rounded-md text-white'>Create</Link>
       </header>
+      <main className='sm:p-8 px-4 py-8 w-full bg-[#f9fafe]'>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/create-post' element={<CreatePost />}/>
+        </Routes>
+      </main>
     </BrowserRouter>
   )
 }
