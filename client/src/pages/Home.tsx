@@ -5,12 +5,12 @@ import {Post} from '../../types'
 const RenderCards = ({data,title}:{data: Post[], title: string}) => {
   if (data?.length > 0) {
     return <>{
-      data.map((post: undefined | Post) => <Card key={post?._id} {...post}/>)
+      data.map((post: null | Post) => <Card key={post?._id} {...post}/>)
     }</>
   }
 
   return (
-    <h2 className='mt-5 font-bold text-[#6469ff] text-xl uppercase'>{title}</h2>
+    <h2 className='text-xl text-[#6449ff] uppercase font-bold mt-5'>{title}</h2>
   )
 }
 
