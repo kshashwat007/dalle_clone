@@ -4,7 +4,7 @@ import {downloadImage} from '../utils'
 
 interface ICard {
   _id?: string
-  name: string|undefined
+  name?: string|undefined
   prompt?: string,
   photo?: any
 }

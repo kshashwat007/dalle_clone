@@ -1,6 +1,7 @@
 export interface Post{
   _id: string
-  _name: string
+  name: string,
+  prompt: string
 }
 
 interface  IForm {
@@ -15,7 +16,7 @@ interface IFormField {
   name?: string,
   placeholder?: string,
   value?: string,
-  handleChange?: (e: React.FormEvent) => void,
+  handleChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
   isSurpriseMe?: boolean,
   handleSurpriseMe?: () => void
 }

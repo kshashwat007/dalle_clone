@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Loader, Card, FormField } from '../components'
 import {Post} from '../../types'
 
-const RenderCards = ({data,title}:{data: Post[], title: string}) => {
+const RenderCards = ({data,title}:{data: Post[]|null, title: string}) => {
   if (data?.length > 0) {
     return <>{
       data.map((post: null | Post) => <Card key={post?._id} {...post}/>)
@@ -18,6 +18,8 @@ const Home = () => {
   const [loading, setloading] = useState(false);
   const [allPosts, setAllPosts] = useState([]);
   const [searchText, setsearchText] = useState('')
+  const [searchedResults, setsearchedResults] = useState<Post[]|null>(null)
+  const [searchTimeout, setsearchTimeout] = useState<(any)>(null)
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -43,6 +45,17 @@ const Home = () => {
 
     fetchPosts()
   }, [])
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => { 
+    clearTimeout(searchTimeout)
+    setsearchText(e.target.value)
+
+    setsearchTimeout(setTimeout(() => {
+      const searchResults = allPosts.filter((post: Post) => post.name.toLowerCase().includes(searchText.toLowerCase()) || post.prompt.toLowerCase().includes(searchText.toLowerCase()))
+      setsearchedResults(searchResults)
+    }, 500))
+    
+  }
   
 
   return (
@@ -53,7 +66,14 @@ const Home = () => {
       </div>
 
       <div className='mt-16'>
-        <FormField />
+        <FormField
+          labelName='Search Post'
+          type='text'
+          name='text'
+          placeholder='Search posts'
+          value={searchText}
+          handleChange={handleSearchChange}
+        />
       </div>
 
       <div className='mt-10'>
@@ -71,7 +91,7 @@ const Home = () => {
             <div className='grid lg:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 grid-cols-1 gap-3'>
               {searchText ? (
                 <RenderCards
-                    data={[]}
+                    data={searchedResults}
                     title="No Search Results Found"
                 />
               ) : (
