@@ -42,7 +42,7 @@ const CreatePost = () => {
         })
 
         const data = await response.json()
-        console.log(data)
+        console.log("image_response",data)
         setform({ ...form, photo: `data:image/jpeg;base64,${data.photo}` })
       } catch (error) {
         alert(error)
